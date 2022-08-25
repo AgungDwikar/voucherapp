@@ -1,17 +1,16 @@
-import cx from 'classnames';
-import Image from 'next/image';
 import React from 'react';
-
-interface TbRowProps {
-    title1: string;
-    title2: string;
+import cx from 'classnames';
+interface TableRowProps {
+    title: string;
+    category: string;
     item: number;
     nominal: number;
     status: 'Pending' | 'Success' | 'Failed';
     image: string;
 }
-function TableRow(props: TbRowProps) {
-    const { title1, title2, item, nominal, status, image } = props;
+
+function TableRow(props: TableRowProps) {
+    const { title, category, item, nominal, status, image } = props;
 
     const statusName = cx({
         'float-start icon-status': true,
@@ -20,7 +19,7 @@ function TableRow(props: TbRowProps) {
         failed: status === 'Failed',
     });
     return (
-        <tr className='align-middle'>
+        <tr data-category='pending' className='align-middle'>
             <th scope='row'>
                 <img
                     className='float-start me-3 mb-lg-0 mb-3'
@@ -31,10 +30,10 @@ function TableRow(props: TbRowProps) {
                 />
                 <div className='game-title-header'>
                     <p className='game-title fw-medium text-start color-palette-1 m-0'>
-                        {title1}
+                        {title}
                     </p>
                     <p className='text-xs fw-normal text-start color-palette-2 m-0'>
-                        {title2}
+                        {category}
                     </p>
                 </div>
             </th>
@@ -42,9 +41,7 @@ function TableRow(props: TbRowProps) {
                 <p className='fw-medium color-palette-1 m-0'>{item} Gold</p>
             </td>
             <td>
-                <p className='fw-medium text-start color-palette-1 m-0'>
-                    {nominal}
-                </p>
+                <p className='fw-medium color-palette-1 m-0'>{nominal}</p>
             </td>
             <td>
                 <div>
@@ -53,6 +50,14 @@ function TableRow(props: TbRowProps) {
                         {status}
                     </p>
                 </div>
+            </td>
+            <td>
+                <a
+                    href='/member/transactions/detail'
+                    className='btn btn-status rounded-pill text-sm'
+                >
+                    Details
+                </a>
             </td>
         </tr>
     );
